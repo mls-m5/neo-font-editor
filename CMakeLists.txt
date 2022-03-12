@@ -11,3 +11,8 @@ target_link_libraries(
     font_editor
     neo_font_lib
     )
+
+target_compile_features(
+    neo_font_lib
+    PUBLIC
+    cxx_std_20)

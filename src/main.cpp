@@ -9,6 +9,7 @@ int main(int argc, char *argv[]) {
         dumpFont(settings.in, settings.editableFile);
         break;
     case Settings::Encode:
+        auto font = loadDump(settings.editableFile);
         break;
     }
 
