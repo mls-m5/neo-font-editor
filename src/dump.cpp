@@ -154,6 +154,7 @@ NeoFont loadDump(std::filesystem::path path) {
         auto height = std::stoul(loadProperty("height"));
 
         font.character(index) = loadChar(file, width, height);
+
         loaded.at(index) = true;
     }
 
