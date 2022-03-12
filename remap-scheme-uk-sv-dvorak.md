@@ -1,5 +1,9 @@
-# Uk layout
+# Uk layout for dvorak in swedish
 
+# For swedish dvorak users that has a
+# neo/neo2 with uk keyboard layout (iso keyboard)
+
+# Key names
 (  40
 )  41
 *  42
@@ -32,8 +36,6 @@
 
 # to avoid comment
 hash  35
-
-## for dvorak in swedish
 
 # swedish -> original uk
 Å -> @

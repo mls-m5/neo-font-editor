@@ -23,4 +23,8 @@ target_compile_features(
     PUBLIC
     cxx_std_20)
 
-file(COPY remap-scheme.md DESTINATION .)
+file(
+    COPY
+    remap-scheme-uk-sv-dvorak.md
+    DESTINATION
+    .)
