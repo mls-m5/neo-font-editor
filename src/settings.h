@@ -22,12 +22,12 @@ font_editor --encode --file font.txt --out new-font-file.os3kapp
 --file <file>     (or -f)        specify editable file
 --out <file>      (or -o)        specify final font path
 --encode <file>   (or -e)        specify configuration file (how to edit font)
+--remap <file>    (or -r)        remap (swap) letters according to remap file
+--verify                         when encoding print to terminal to inspect
+--repack                         (for testing) decode applet and encode
 --help  -h                       print this text
 
 
-example config file:
-43 -> 60
-80 -> 94
 )_";
 
 struct Settings {
@@ -36,17 +36,20 @@ struct Settings {
     enum Action {
         Dump,
         Encode,
+        Repack,
     };
 
     path in;
     path editableFile;
     path outFont;
+    path remapFile;
+    bool shouldVerify = false;
 
     Action action = Dump;
 
     static void printHelp() {
         std::cerr << helpstr << "\n";
-        std::exit(0);
+        std::terminate();
     }
 
     void requireOutFile() {
@@ -58,6 +61,12 @@ struct Settings {
     void requireEditableFile() {
         if (editableFile.empty()) {
             std::cerr << "no editable file specified. Please use --file\n";
+        }
+    }
+
+    void requireInFile() {
+        if (in.empty()) {
+            std::cerr << "no in font file specified.\n";
         }
     }
 
@@ -73,7 +82,7 @@ struct Settings {
                 ++i;
                 if (i >= args.size()) {
                     std::cerr << "more arguments for action\n";
-                    std::exit(0);
+                    std::terminate();
                 }
 
                 return args.at(i);
@@ -93,6 +102,15 @@ struct Settings {
             else if (arg == "-o" || arg == "--out") {
                 outFont = getNextArg();
             }
+            else if (arg == "-r" || arg == "--remap") {
+                remapFile = getNextArg();
+            }
+            else if (arg == "--verify") {
+                shouldVerify = true;
+            }
+            else if (arg == "--repack") {
+                action = Repack;
+            }
             else if (arg == "-h" || arg == "--help") {
                 printHelp();
             }
@@ -101,8 +119,16 @@ struct Settings {
             }
         }
 
-        if (action == Encode) {
+        switch (action) {
+        case Encode:
             requireEditableFile();
+            requireOutFile();
+            break;
+        case Dump:
+            requireInFile();
+            break;
+        case Repack:
+            requireInFile();
             requireOutFile();
         }
     }

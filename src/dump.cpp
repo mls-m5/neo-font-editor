@@ -43,11 +43,14 @@ void dump(const NeoFont &font, std::ostream &stream = std::cout) {
 NeoCharacter loadChar(std::istream &stream, size_t width, size_t height) {
     auto c = NeoCharacter{};
 
+    c.setWidth(width);
+    c.setHeight(height);
+
     auto y = 0ul;
 
     auto started = false;
 
-    for (std::string line; std::getline(stream, line); ++y) {
+    for (std::string line; std::getline(stream, line);) {
         if (line.empty()) {
             if (started) {
                 break;
@@ -74,6 +77,7 @@ NeoCharacter loadChar(std::istream &stream, size_t width, size_t height) {
             }
             ++x;
         }
+        ++y;
     }
 
     return c;
@@ -98,7 +102,7 @@ NeoFont loadDump(std::filesystem::path path) {
 
     if (!file.is_open()) {
         std::cerr << "could not open path " << path << "\n";
-        std::exit(1);
+        std::terminate();
     }
 
     auto getLine = [&file]() {
@@ -123,7 +127,7 @@ NeoFont loadDump(std::filesystem::path path) {
         if (line.substr(0, name.size() + 1) != (name + " ")) {
             std::cerr << "expected property '" << name << "', got '" << line
                       << "'\n";
-            std::exit(1);
+            std::terminate();
         }
         return line.substr(name.size() + 1);
     };
@@ -142,7 +146,7 @@ NeoFont loadDump(std::filesystem::path path) {
     for (std::string line; line = getNonZeroLine(), !line.empty();) {
         if (!line.starts_with("char ")) {
             std::cerr << "expected 'char' got " << line << "\n";
-            std::exit(1);
+            std::terminate();
         }
         auto index = std::stoul(line.substr(5));
 

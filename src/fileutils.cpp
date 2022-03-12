@@ -1,5 +1,6 @@
 #include "fileutils.h"
 #include "neofontlib/NeoFont.h"
+#include <iostream>
 
 std::vector<char> loadFile(std::filesystem::path path) {
     auto file = std::ifstream{path};
@@ -14,6 +15,11 @@ void saveFont(const NeoFont &font, std::filesystem::path path) {
 
 NeoFont loadFont(std::filesystem::path path) {
     auto content = loadFile(path);
+
+    if (content.empty()) {
+        std::cerr << "could not open " << path << "\n";
+        std::terminate();
+    }
 
     auto font = NeoFont{};
     font.decodeApplet(content);
