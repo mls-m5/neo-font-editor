@@ -1,0 +1,3 @@
+[submodule "lib/neofontlib"]
+	path = lib/neofontlib
+	url = git@github.com:mls-m5/neofontlib.git
