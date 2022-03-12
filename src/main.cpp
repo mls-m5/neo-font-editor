@@ -1,4 +1,5 @@
 #include "dump.h"
+#include "fileutils.h"
 #include "settings.h"
 
 int main(int argc, char *argv[]) {
@@ -10,6 +11,9 @@ int main(int argc, char *argv[]) {
         break;
     case Settings::Encode:
         auto font = loadDump(settings.editableFile);
+        saveFont(font, settings.outFont);
+        std::cout << "font saved...";
+
         break;
     }
 

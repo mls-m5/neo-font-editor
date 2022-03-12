@@ -11,8 +11,8 @@ Example editable file:
 ```
 
 appletname Neo Font - Small (6 lines)
-appletInfo _opyright (c) 19?8-2005 by Alpha_mart, LLC
-fontName Small (6 lines)
+appletinfo _opyright (c) 19?8-2005 by Alpha_mart, LLC
+fontname Small (6 lines)
 version 1.0
 id 44800
 height 11

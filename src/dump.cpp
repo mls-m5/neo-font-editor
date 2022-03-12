@@ -82,10 +82,7 @@ NeoCharacter loadChar(std::istream &stream, size_t width, size_t height) {
 } // namespace
 
 void dumpFont(std::filesystem::path path, std::filesystem::path target) {
-    auto content = loadFile(path);
-
-    auto font = NeoFont{};
-    font.decodeApplet(content);
+    auto font = loadFont(path);
 
     if (target.empty()) {
         dump(font);

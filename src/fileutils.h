@@ -4,11 +4,15 @@
 #include <fstream>
 #include <vector>
 
-inline std::vector<char> loadFile(std::filesystem::path path) {
-    auto file = std::ifstream{path};
+inline std::vector<char> loadFile(std::filesystem::path path);
 
-    return std::vector<char>{std::istreambuf_iterator<char>{file}, {}};
-}
+template <typename T>
+void saveFile(std::filesystem::path path, const T &data);
+
+class NeoFont loadFont(std::filesystem::path path);
+void saveFont(const NeoFont &font, std::filesystem::path path);
+
+// Declarations
 
 template <typename T>
 void saveFile(std::filesystem::path path, const T &data) {

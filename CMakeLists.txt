@@ -5,6 +5,7 @@ add_executable(
     font_editor
     src/main.cpp
     src/dump.cpp
+    src/fileutils.cpp
     )
 
 target_link_libraries(
