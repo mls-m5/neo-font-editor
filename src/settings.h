@@ -49,7 +49,7 @@ struct Settings {
 
     static void printHelp() {
         std::cerr << helpstr << "\n";
-        std::terminate();
+        std::exit(0);
     }
 
     void requireOutFile() {

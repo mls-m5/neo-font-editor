@@ -11,7 +11,7 @@ and install fonts.
 
 1. Build the project with cmake
 2. Use neotools to extract your font applet
-3. run `font_editor your_font.os3kapp -f font-data.txt
+3. run `font_editor your_font.os3kapp -f font-data.txt`
 4. create a remap-file with the characters you want to move
 5. change appletname and id and other information in your font-data file
 6. encode your app back to a applet `font_editor --encode -f font-data.txt -o new-font-location.os3kapp --remap remap-scheme-uk-sv-dvorak.txt`
