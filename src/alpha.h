@@ -6,9 +6,10 @@
 
 namespace impl {
 
-inline auto locale = std::locale{"sv_SE.UTF8"};
+// inline auto locale = std::locale{"sv_SE.UTF8"};
+inline auto locale = std::locale{""};
 
-}
+} // namespace impl
 
 inline bool isUtfTail(char c) {
     // 0xC0 = 0b11000000
