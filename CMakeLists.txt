@@ -28,3 +28,10 @@ file(
     remap-scheme-uk-sv-dvorak.md
     DESTINATION
     .)
+
+enable_testing()
+
+add_test(
+    NAME help
+    COMMAND ./font_editor --help
+    )
