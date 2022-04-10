@@ -6,7 +6,7 @@
 
 namespace impl {
 
-inline auto locale = std::locale{"sv_SE.UTF8"};
+inline auto locale = std::locale{"sv_SE.UTF-8"};
 
 }
 
