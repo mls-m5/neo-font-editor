@@ -4,18 +4,23 @@ Edit alphasmart neo and neo 2 fonts
 
 Edit font by dumping to text file, edit and encode back again
 
-used together with  [neotools](https://github.com/lykahb/neotools) to extract
+used together with [neotools](https://github.com/lykahb/neotools) to extract
 and install fonts.
 
 ## Workflow
 
-1. Build the project with cmake
+1. Build the project with cmake. After these commands there should be an executable `font_editor` in the root of this directory.
+```
+git submodule update --init --recursive
+cmake .
+make
+```
 2. Use neotools to extract your font applet
-3. run `font_editor your_font.os3kapp -f font-data.txt`
-4. create a remap-file with the characters you want to move
-5. change appletname and id and other information in your font-data file
-6. encode your app back to a applet `font_editor --encode -f font-data.txt -o new-font-location.os3kapp --remap remap-scheme-uk-sv-dvorak.txt`
-7. install the new code on your neo with neotools
+3. Run `./font_editor your_font.os3kapp -f font-data.txt`
+4. Create a remap-file with the characters you want to move
+5. Change appletname and id and other information in your font-data file
+6. Encode your app back to a applet `./font_editor --encode -f font-data.txt -o new-font-location.os3kapp --remap remap-scheme-uk-sv-dvorak.txt`
+7. Install the new code on your neo with neotools
 
 ## Example remap file
 
