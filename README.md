@@ -9,10 +9,12 @@ and install fonts.
 
 ## Workflow
 
-1. Build the project with cmake. After these commands there should be an executable `font_editor` in the root of this directory.
+1. Build the project with cmake. After these commands there should be an executable `font_editor` in the build directory.
 ```
 git submodule update --init --recursive
-cmake .
+mkdir build
+cd build
+cmake ..
 make
 ```
 2. Use neotools to extract your font applet
