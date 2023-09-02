@@ -10,3 +10,4 @@ build/
 *.cxxflags
 *.files
 *.includes
+.qtc_clangd/
