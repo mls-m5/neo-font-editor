@@ -3,6 +3,7 @@
 #include "remap.h"
 #include "settings.h"
 
+#ifndef __EMSCRIPTEN__
 int main(int argc, char *argv[]) {
     const auto settings = Settings{argc, argv};
 
@@ -33,3 +34,5 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+
+#endif
