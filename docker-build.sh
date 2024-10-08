@@ -12,7 +12,7 @@ docker run --rm \
     -v $(pwd):$(pwd) \
     -u $(id -u):$(id -g) \
     -w $(pwd) emscripten/emsdk \
-    emcc -gsource-map -g4 src/*.cpp lib/neofontlib/src/*.cc -I include -I lib/neofontlib/include/ \
+    emcc -gsource-map src/*.cpp lib/neofontlib/src/*.cc -I include -I lib/neofontlib/include/ \
         -std=c++20 -o build/emdocker/index.html --shell-file html/index.html \
         -sSTACK_SIZE=655360
 
