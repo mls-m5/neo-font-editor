@@ -4,6 +4,7 @@
 #include "settings.h"
 
 #ifndef __EMSCRIPTEN__
+
 int main(int argc, char *argv[]) {
     const auto settings = Settings{argc, argv};
 

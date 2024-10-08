@@ -4,18 +4,31 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Neo font editor</title>
+    <style>
+      #dropZone {
+        width: 300px;
+        height: 200px;
+        border: 2px dashed #aaa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+        color: #777;
+      }
+      #dropZone.hover {
+        border-color: #000;
+        color: #000;
+      }
+    </style>
   </head>
   <body>
+    <div id="dropZone">Drop files here</div>
+
     <script type='text/javascript'>
       var Module = {
         print: (function() {
           return (...args) => {
             var text = args.join(' ');
-            // These replacements are necessary if you render to raw HTML
-            //text = text.replace(/&/g, "&amp;");
-            //text = text.replace(/</g, "&lt;");
-            //text = text.replace(/>/g, "&gt;");
-            //text = text.replace('\n', '<br>', 'g');
             console.log(text);
           };
         })(),
@@ -31,7 +44,52 @@
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
         }
       };
+
+      // File drop handler
+      const dropZone = document.getElementById('dropZone');
+
+      dropZone.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        dropZone.classList.add('hover');
+      });
+
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('hover');
+      });
+
+      dropZone.addEventListener('drop', (event) => {
+        event.preventDefault();
+        dropZone.classList.remove('hover');
+
+        const files = event.dataTransfer.files;
+        if (files.length > 0) {
+          const file = files[0];
+          const reader = new FileReader();
+
+          reader.onload = (e) => {
+            const arrayBuffer = e.target.result;
+            const binaryData = new Uint8Array(arrayBuffer);
+
+            // Pass binaryData to Emscripten Module
+            Module.handleDroppedFile(binaryData);
+          };
+
+          reader.readAsArrayBuffer(file);
+        }
+      });
+
+      // Adding a function in Module to handle the binary data
+      Module.handleDroppedFile = (binaryData) => {
+        console.log('File dropped, binary data length:', binaryData.length);
+        // Calling the C++ function directly
+        if (Module._nativeHandleDroppedData) {
+          Module._nativeHandleDroppedData(binaryData, binaryData.length);
+        } else {
+          console.error('Module._handleDroppedData is not available. Ensure that the C++ function is exported correctly using -sEXPORTED_FUNCTIONS=["_handleDroppedData"]');
+        }
+      };
     </script>
+
     {{{ SCRIPT }}}
   </body>
 </html>

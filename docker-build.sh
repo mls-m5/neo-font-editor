@@ -6,7 +6,7 @@ mkdir -p build/emdocker
 
 # cp html/index.html build/emdocker/
 
-rm /build/emdocker/index.html
+rm build/emdocker/index.html
 
 docker run --rm \
     -v $(pwd):$(pwd) \
@@ -14,6 +14,6 @@ docker run --rm \
     -w $(pwd) emscripten/emsdk \
     emcc -gsource-map src/*.cpp lib/neofontlib/src/*.cc -I include -I lib/neofontlib/include/ \
         -std=c++20 -o build/emdocker/index.html --shell-file html/index.html \
-        -sSTACK_SIZE=655360
+        -sEXPORTED_FUNCTIONS=_nativeHandleDroppedData
 
 
