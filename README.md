@@ -1,11 +1,15 @@
 # neo_font_editor
 
-Edit alphasmart neo and neo 2 fonts
+Edit alphasmart neo and neo 2 fonts.
 
 Edit font by dumping to text file, edit and encode back again
 
 used together with [neotools](https://github.com/lykahb/neotools) to extract
 and install fonts.
+
+This project is based on [neofontlib](https://github.com/mls-m5/neofontlib)
+that is in turn a stripped down version of
+[neofonteditor](https://github.com/tSoniq/neofonteditor).
 
 ## News
 
@@ -30,7 +34,7 @@ make
 
 ## Example remap file
 
-To find what character is what look inside the dumped text file
+To find what character is look inside the dumped text file
 
 ```python
 
