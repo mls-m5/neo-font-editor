@@ -34,7 +34,7 @@
 { 123
 ~ 126
 
-# to avoid comment
+# to avoid comment, # sign is written "hash"
 hash  35
 
 # swedish -> original uk

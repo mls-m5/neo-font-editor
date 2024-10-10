@@ -14,6 +14,7 @@ docker run --rm \
         -std=c++20 -o build/emdocker/index.html --shell-file html/index.html \
         -sEXPORTED_FUNCTIONS=_nativeHandleDroppedData \
         --cache build/emcache \
-        --bind
+        --bind \
+        --embed-file remap-scheme-uk-sv-dvorak.md
 
 

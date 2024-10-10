@@ -13,11 +13,14 @@ Remap::Remap(std::filesystem::path path) {
     }
 
     std::cout << "remap file: " << path << "\n";
+    parse(file);
+}
 
+void Remap::parse(std::istream &stream) {
     auto replacementStrings =
         std::vector<std::pair<std::string, std::string>>{};
 
-    for (std::string line; std::getline(file, line);) {
+    for (std::string line; std::getline(stream, line);) {
         if (auto f = line.find("#"); f != std::string::npos) {
             line = line.substr(0, f);
         }
@@ -73,11 +76,11 @@ Remap::Remap(std::filesystem::path path) {
     }
 }
 
-NeoFont Remap::apply(const NeoFont &font) {
-    auto newFont = font;
+std::unique_ptr<NeoFont> Remap::apply(const NeoFont &font) {
+    auto newFont = std::make_unique<NeoFont>(font);
 
     for (auto replacement : _replacements) {
-        newFont.character(replacement.second) =
+        newFont->character(replacement.second) =
             font.character(replacement.first);
     }
 
