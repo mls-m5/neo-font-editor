@@ -1,9 +1,10 @@
+
+#ifndef __EMSCRIPTEN__
+
 #include "dump.h"
 #include "fileutils.h"
 #include "remap.h"
 #include "settings.h"
-
-#ifndef __EMSCRIPTEN__
 
 int main(int argc, char *argv[]) {
     const auto settings = Settings{argc, argv};

@@ -15,31 +15,6 @@ void printCharacter(const NeoCharacter &c, std::ostream &stream) {
     stream << "\n";
 }
 
-void dump(const NeoFont &font, std::ostream &stream = std::cout) {
-    // Print named property
-    auto d = [&stream](auto name, auto value) {
-        stream << name << " " << value << "\n";
-    };
-
-    d("appletname", font.appletName());
-    d("appletinfo", font.appletInfo());
-    d("fontname", font.fontName());
-    d("version", font.version());
-    d("id", font.ident());
-    d("height", font.height());
-    stream << "\n";
-
-    for (auto &c : font) {
-        unsigned char letter = std::distance(font.begin(), &c);
-        d("char", static_cast<int>(letter));
-        d("width", c.width());
-        d("height", c.height());
-        stream << "\n";
-
-        printCharacter(c, stream);
-    }
-}
-
 NeoCharacter loadChar(std::istream &stream, size_t width, size_t height) {
     auto c = NeoCharacter{};
 
@@ -85,11 +60,36 @@ NeoCharacter loadChar(std::istream &stream, size_t width, size_t height) {
 
 } // namespace
 
+void dump(const NeoFont &font, std::ostream &stream) {
+    // Print named property
+    auto d = [&stream](auto name, auto value) {
+        stream << name << " " << value << "\n";
+    };
+
+    d("appletname", font.appletName());
+    d("appletinfo", font.appletInfo());
+    d("fontname", font.fontName());
+    d("version", font.version());
+    d("id", font.ident());
+    d("height", font.height());
+    stream << "\n";
+
+    for (auto &c : font) {
+        unsigned char letter = std::distance(font.begin(), &c);
+        d("char", static_cast<int>(letter));
+        d("width", c.width());
+        d("height", c.height());
+        stream << "\n";
+
+        printCharacter(c, stream);
+    }
+}
+
 void dumpFont(std::filesystem::path path, std::filesystem::path target) {
     auto font = loadFont(path);
 
     if (target.empty()) {
-        dump(font);
+        dump(font, std::cout);
     }
     else {
         auto file = std::ofstream{target};
