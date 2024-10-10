@@ -7,7 +7,7 @@
     <style>
       #dropZone {
         width: 300px;
-        height: 200px;
+        height: 180px;
         border: 2px dashed #aaa;
         display: flex;
         align-items: center;
@@ -20,13 +20,21 @@
         color: #000;
       }
       textarea {
-        width: 100%;
+        width: 200px;
+        display: inline-block;
       }
+
+      textarea.hover {
+        border-color: #000;
+        color: #000;
+      }
+
     </style>
   </head>
   <body>
-    <div id="dropZone">Drop files here</div>
+<!--    <div id="dropZone">Drop files here</div>-->
     <textarea id="text" rows="100"></textarea>
+    <textarea id="translation" rows="100"></textarea>
 
     <script type='text/javascript'>
       var Module = {
@@ -49,21 +57,23 @@
         }
       };
 
+      const text = document.getElementById('text');
+      const translation = document.getElementById('translation');
+
+      for (let d of [text, translation]) {
       // File drop handler
-      const dropZone = document.getElementById('dropZone');
-
-      dropZone.addEventListener('dragover', (event) => {
+      d.addEventListener('dragover', (event) => {
         event.preventDefault();
-        dropZone.classList.add('hover');
+        d.classList.add('hover');
       });
 
-      dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('hover');
+      d.addEventListener('dragleave', () => {
+        d.classList.remove('hover');
       });
 
-      dropZone.addEventListener('drop', (event) => {
+      d.addEventListener('drop', (event) => {
         event.preventDefault();
-        dropZone.classList.remove('hover');
+        d.classList.remove('hover');
 
         const files = event.dataTransfer.files;
         if (files.length > 0) {
@@ -71,16 +81,17 @@
           const reader = new FileReader();
 
           reader.onload = (e) => {
-            const arrayBuffer = e.target.result;
-            const binaryData = new Uint8Array(arrayBuffer);
+        const arrayBuffer = e.target.result;
+        const binaryData = new Uint8Array(arrayBuffer);
 
-            // Pass binaryData to Emscripten Module
-            Module.handleDroppedFile(binaryData);
+        // Pass binaryData to Emscripten Module
+        Module.handleDroppedFile(binaryData);
           };
 
           reader.readAsArrayBuffer(file);
         }
       });
+      }
 
       // Adding a function in Module to handle the binary data
       Module.handleDroppedFile = (binaryData) => {
