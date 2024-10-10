@@ -97,14 +97,16 @@ void dumpFont(std::filesystem::path path, std::filesystem::path target) {
     }
 }
 
-NeoFont loadDump(std::filesystem::path path) {
+void loadDump(NeoFont &font, std::filesystem::path path) {
     auto file = std::ifstream{path};
 
     if (!file.is_open()) {
         std::cerr << "could not open path " << path << "\n";
         std::terminate();
     }
+}
 
+void loadDump(NeoFont &font, std::istream &file) {
     auto getLine = [&file]() {
         std::string line;
         std::getline(file, line);
@@ -132,7 +134,7 @@ NeoFont loadDump(std::filesystem::path path) {
         return line.substr(name.size() + 1);
     };
 
-    auto font = NeoFont{};
+    // auto font = NeoFont{};
 
     font.setAppletName(loadProperty("appletname").c_str());
     font.setAppletInfo(loadProperty("appletinfo").c_str());
@@ -165,6 +167,4 @@ NeoFont loadDump(std::filesystem::path path) {
             std::cerr << "warning character " << i << " was never loaded\n";
         }
     }
-
-    return font;
 }

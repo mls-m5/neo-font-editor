@@ -14,12 +14,13 @@ int main(int argc, char *argv[]) {
         dumpFont(settings.in, settings.editableFile);
         break;
     case Settings::Encode: {
-        auto font = loadDump(settings.editableFile);
+        auto font = std::make_unique<NeoFont>();
+        loadDump(*font, settings.editableFile);
         if (!settings.remapFile.empty()) {
             auto remap = Remap{settings.remapFile};
-            font = remap.apply(font);
+            font = remap.apply(*font);
         }
-        saveFont(font, settings.outFont);
+        saveFont(*font, settings.outFont);
         std::cout << "font saved to " << settings.outFont << "...\n";
 
         break;

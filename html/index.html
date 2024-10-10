@@ -85,14 +85,29 @@
       // Adding a function in Module to handle the binary data
       Module.handleDroppedFile = (binaryData) => {
         console.log('File dropped, binary data length:', binaryData.length);
-        // Calling the C++ function directly
+
         if (Module._nativeHandleDroppedData) {
-          Module._nativeHandleDroppedData(binaryData, binaryData.length);
+          // Step 1: Allocate memory in WebAssembly for the binary data
+          const buffer = Module._malloc(binaryData.length);
+
+          if (buffer === 0) {
+            console.error('Failed to allocate memory in WebAssembly');
+            return;
+          }
+
+          // Step 2: Copy the JavaScript binary data into the WebAssembly memory
+          Module.HEAPU8.set(binaryData, buffer);
+
+          // Step 3: Call the C++ function with the pointer and the length of the data
+          Module._nativeHandleDroppedData(buffer, binaryData.length);
+
+          // Step 4: Free the allocated memory after use to prevent memory leaks
+          Module._free(buffer);
         } else {
-          console.error('Module._handleDroppedData is not available. Ensure that the C++ function is exported correctly using -sEXPORTED_FUNCTIONS=["_handleDroppedData"]');
+          console.error('Module._nativeHandleDroppedData is not available. Ensure that the C++ function is exported correctly using -s EXPORTED_FUNCTIONS=["_nativeHandleDroppedData"]');
         }
       };
-    </script>
+      </script>
 
     {{{ SCRIPT }}}
   </body>

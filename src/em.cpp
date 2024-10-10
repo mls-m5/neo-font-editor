@@ -15,7 +15,13 @@
 
 extern "C" void nativeHandleDroppedData(uint8_t *data, size_t len) {
     auto font = std::make_unique<NeoFont>();
-    font->decodeApplet(data, len);
+
+    // std::cout.write(reinterpret_cast<char *>(data), len);
+
+    if (!font->decodeApplet(data, len)) {
+        std::cout << "Failed to decode app/font" << std::endl;
+        return;
+    }
     std::cout << font->appletName() << std::endl;
 
     {
@@ -40,6 +46,17 @@ extern "C" void nativeEncode() {
             "getElementById", std::string{"text"});
 
         textareaContent = textArea["value"].as<std::string>();
+    }
+
+    auto remap = Remap{};
+
+    {
+        auto ss = std::istringstream{std::move(textareaContent)};
+        remap.parse(ss);
+    }
+
+    auto font = std::make_unique<NeoFont>();
+    {
     }
 
     // Todo later

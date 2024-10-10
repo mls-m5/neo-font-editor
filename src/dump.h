@@ -9,4 +9,5 @@
 void dump(const NeoFont &font, std::ostream &stream);
 void dumpFont(std::filesystem::path path, std::filesystem::path target);
 
-NeoFont loadDump(std::filesystem::path path);
+void loadDump(NeoFont &font, std::filesystem::path path);
+void loadDump(NeoFont &font, std::istream &file);

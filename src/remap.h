@@ -10,6 +10,8 @@ struct Remap {
     Remap() = default;
     Remap(std::filesystem::path path);
 
+    void parse(std::istream &stream);
+
     [[nodiscard]] std::unique_ptr<NeoFont> apply(const NeoFont &font);
 
 private:
