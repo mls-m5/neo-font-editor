@@ -7,6 +7,10 @@ Edit font by dumping to text file, edit and encode back again
 used together with [neotools](https://github.com/lykahb/neotools) to extract
 and install fonts.
 
+## News
+
+A web based editor is under development.
+
 ## Workflow
 
 1. Build the project with cmake. After these commands there should be an executable `font_editor` in the build directory.

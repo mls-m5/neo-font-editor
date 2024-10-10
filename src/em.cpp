@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <emscripten/emscripten.h>
 #include <emscripten/val.h>
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <neofontlib/NeoFont.h>
@@ -34,6 +35,19 @@ extern "C" void nativeHandleDroppedData(uint8_t *data, size_t len) {
             "getElementById", std::string{"text"});
         textArea.set("value", ss.str());
     }
+
+    {
+        auto file = std::ifstream{"remap-scheme-uk-sv-dvorak.md"};
+        auto ss = std::ostringstream{};
+        ss << "# This is an example mapping file, if you are not swedish\n";
+        ss << "# You may remove this content\n\n";
+        ss << file.rdbuf();
+
+        emscripten::val document = emscripten::val::global("document");
+        emscripten::val textArea = document.call<emscripten::val>(
+            "getElementById", std::string{"translation"});
+        textArea.set("value", ss.str());
+    }
 }
 
 extern "C" void nativeEncode() {
@@ -57,6 +71,7 @@ extern "C" void nativeEncode() {
 
     auto font = std::make_unique<NeoFont>();
     {
+        // Continu here
     }
 
     // Todo later

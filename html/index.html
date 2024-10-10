@@ -21,7 +21,11 @@
       }
       textarea {
         width: 200px;
+        height: 90%;
         display: inline-block;
+      }
+      html, body {
+        height: 100%;
       }
 
       textarea.hover {
@@ -29,12 +33,16 @@
         color: #000;
       }
 
+      textarea#translation {
+        width: 400px;
+      }
+
     </style>
   </head>
   <body>
 <!--    <div id="dropZone">Drop files here</div>-->
-    <textarea id="text" rows="100"></textarea>
-    <textarea id="translation" rows="100"></textarea>
+    <textarea id="text" ></textarea>
+    <textarea id="translation" ></textarea>
 
     <script type='text/javascript'>
       var Module = {
