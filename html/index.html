@@ -40,9 +40,10 @@
     </style>
   </head>
   <body>
-<!--    <div id="dropZone">Drop files here</div>-->
     <textarea id="text" ></textarea>
     <textarea id="translation" ></textarea>
+    <div id="resultDiv"></div>
+    <button id="encodeButton">Encode and download</button>
 
     <script type='text/javascript'>
       var Module = {
@@ -126,6 +127,9 @@
           console.error('Module._nativeHandleDroppedData is not available. Ensure that the C++ function is exported correctly using -s EXPORTED_FUNCTIONS=["_nativeHandleDroppedData"]');
         }
       };
+
+      let encodeButton = document.getElementById("encodeButton");
+      encodeButton.addEventListener("click", () => Module._nativeEncode());
       </script>
 
     {{{ SCRIPT }}}
