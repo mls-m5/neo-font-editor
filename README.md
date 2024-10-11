@@ -13,7 +13,7 @@ that is in turn a stripped down version of
 
 ## News
 
-A web based editor is under development.
+You can run the application online [here](https://xn--laserskld-67a.se/neo-font-editor/).
 
 ## Workflow
 

@@ -17,8 +17,6 @@
 extern "C" void nativeHandleDroppedData(uint8_t *data, size_t len) {
     auto font = std::make_unique<NeoFont>();
 
-    // std::cout.write(reinterpret_cast<char *>(data), len);
-
     if (!font->decodeApplet(data, len)) {
         std::cout << "Failed to decode app/font" << std::endl;
         return;
@@ -86,8 +84,7 @@ void createDownload(const NeoFont &font) {
 
     emscripten::val resultDiv = document.call<emscripten::val>(
         "getElementById", std::string{"resultDiv"});
-    // Append the anchor to the body and trigger a click to download
-    // auto body = document.call<emscripten::val>("body");
+    // Append the anchor to the resultDiv and trigger a click to download
     resultDiv.call<void>("appendChild", anchor);
     anchor.call<void>("click");
 
